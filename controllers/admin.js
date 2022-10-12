@@ -1,6 +1,3 @@
-// Validaciones de campos
-const { validationResult } = require('express-validator');
-
 // Models
 const Admin = require('../models/admin');
 
@@ -19,17 +16,6 @@ const getAdmin = async (request, response) => {
 const crearAdmin = async (request, response) => {
     // Valores del body
     const { email, password } = request.body;
-
-    // Obtenemos todos los errores
-    const errores = validationResult(request);
-
-    // Si los errores no están vacios
-    if (!errores.isEmpty()) {
-        return response.status(400).json({
-            ok: false,
-            errors: errores.mapped() // Se traen los errores mapeados
-        })
-    }
 
     // Verificar si el admin ya existe
     try {
