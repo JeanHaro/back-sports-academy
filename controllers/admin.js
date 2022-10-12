@@ -2,10 +2,13 @@
 const Admin = require('../models/admin');
 
 // Obtener administradores
-const getAdmin = (request, response) => {
+const getAdmin = async (request, response) => {
+    // Encontrar administradores
+    const admin = await Admin.find();
+
     response.json({
         ok: true,
-        msg: 'Obtener Administradores'
+        admin
     })
 }
 
