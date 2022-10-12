@@ -16,6 +16,9 @@ const app = express();
 // Configurar CORS
 app.use(cors());
 
+// Parseo del body
+app.use(express.json());
+
 // Conectar a la BD
 dbConnection();
 
