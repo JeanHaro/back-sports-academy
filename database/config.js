@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Variables de entorno
 require('dotenv').config();
 
-// Establecer la conexión
+// TODO: Establecer la conexión
 const dbConnection = async () => {
     try {
         // Para conectarnos al BD

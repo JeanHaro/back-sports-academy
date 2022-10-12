@@ -1,9 +1,12 @@
+// bycripts
+const bcrypt = require('bcryptjs');
+
 // Models
 const Admin = require('../models/admin');
 
 // Obtener administradores
 const getAdmin = async (request, response) => {
-    // Encontrar administradores
+    // TODO: Encontrar administradores
     const admin = await Admin.find();
 
     response.json({
@@ -19,7 +22,7 @@ const crearAdmin = async (request, response) => {
 
     // Verificar si el admin ya existe
     try {
-        // Encontrar los email de los admin
+        // TODO: Encontrar los email de los admin
         const existeEmail = await Admin.findOne({ email });
 
         // Si el email ya existe
@@ -33,7 +36,12 @@ const crearAdmin = async (request, response) => {
         // Instanciamos la estructura del Admin
         const admin = new Admin(request.body);
 
-        // Guardar en la base de datos
+        // TODO: Encriptar contraseña
+        // Genera un número o data de manera aleatoria
+        const salt = bcrypt.genSaltSync();
+        admin.password = bcrypt.hashSync(password, salt); // Hashea el password
+
+        // TODO: Guardar en la base de datos
         await admin.save();
 
         response.json({

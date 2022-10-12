@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 
-// Verifica si no hay errores
+// TODO: Verifica si no hay errores
 const validarCampos = (request, response, next) => {
     const errores = validationResult(request);
 

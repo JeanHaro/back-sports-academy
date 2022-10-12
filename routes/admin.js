@@ -15,7 +15,7 @@ const { getAdmin, crearAdmin } = require('../controllers/admin');
 
 const router = Router();
 
-// Rutas
+// TODO: Rutas
 // Obtener admin
 router.get('/', getAdmin);
 // Crear admin
