@@ -76,12 +76,10 @@ const actualizarAdmin = async (request, response) => {
         }
 
         // TODO: Campos recibidos
-        const campos = request.body;
+        const { password, email, ...campos } = request.body;
 
-        // TODO: Si el email del id es igual al email recibida
-        if (adminID.email === request.body.email) {
-            delete campos.email;
-        } else {
+        // TODO: Si el email del id no es igual al email recibida
+        if (adminID.email !== email) {
             const existeEmail = await Admin.findOne({ email: request.body.email })
 
             // Si el email ya existe
@@ -93,8 +91,8 @@ const actualizarAdmin = async (request, response) => {
             }
         }
 
-        // TODO: Borramos el password del campo, para que no actualice
-        delete campos.password;
+        // TODO: Guardamos el email
+        campos.email = email;
 
         // TODO: Actualización
         const adminActualizado = await Admin.findByIdAndUpdate(uid, campos, { new: true });
