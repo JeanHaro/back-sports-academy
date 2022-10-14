@@ -14,7 +14,8 @@ const { validarCampos } = require('../middlewares/validar-campos');
 const { 
     getAdmin, 
     crearAdmin, 
-    actualizarAdmin 
+    actualizarAdmin, 
+    eliminarAdmin
 } = require('../controllers/admin');
 
 const router = Router();
@@ -34,5 +35,8 @@ router.post('/', [
 router.put('/:id', [
     check('email', 'El correo electrónico es obligatorio').isEmail()
 ], actualizarAdmin);
+
+// Eliminar admin
+router.delete('/:id', eliminarAdmin)
 
 module.exports = router;

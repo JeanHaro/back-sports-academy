@@ -64,7 +64,7 @@ const actualizarAdmin = async (request, response) => {
     const uid = request.params.id;
     
     try {
-        // TODO: Buscar por el ID 
+        // TODO: Buscar admin por el ID 
         const adminID = await Admin.findById(uid);
 
         // Si no se encuentra el id
@@ -111,8 +111,43 @@ const actualizarAdmin = async (request, response) => {
     }
 }
 
+// Eliminar Admin
+const eliminarAdmin = async (request, response) => {
+    // Obtenemos el id del enlace
+    const uid = request.params.id;
+
+    try {
+        // TODO: Buscamos admin por ID
+        const adminID = await Admin.findById(uid);
+
+        // Si no se encuentra el id
+        if (!adminID) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'No existe un admin por ese id'
+            })
+        }
+
+        // TODO: Eliminación
+        await Admin.findByIdAndDelete(uid);
+
+        response.json({
+            ok: true,
+            msg: 'Usuario eliminado'
+        })
+    } catch (error) {
+        console.log(error);
+        
+        response.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        })
+    }
+}
+
 module.exports = {
     getAdmin,
     crearAdmin,
-    actualizarAdmin
+    actualizarAdmin,
+    eliminarAdmin
 }
