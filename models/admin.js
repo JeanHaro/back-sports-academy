@@ -15,7 +15,7 @@ const AdminSchema = Schema({
 
 // Sobrescribir el método
 AdminSchema.method('toJSON', function() {
-    const { _id, __v, ...object } = this.toObject();
+    const { _id, __v, password, ...object } = this.toObject();
 
     object.uid = _id;
 
