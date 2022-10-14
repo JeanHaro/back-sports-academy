@@ -25,6 +25,7 @@ dbConnection();
 // Rutas
 // --> Admin
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/auth', require('./routes/auth'));
 
 // Levantamos el servidor
 app.listen(process.env.PORT, () => {
