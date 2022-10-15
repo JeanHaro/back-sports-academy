@@ -1,6 +1,9 @@
 // bycripts
 const bcrypt = require('bcryptjs');
 
+// Generar el JSON Web Token
+const { generarJWT } = require('../helpers/jwt');
+
 // Models
 const Admin = require('../models/admin');
 
@@ -44,9 +47,13 @@ const crearAdmin = async (request, response) => {
         // TODO: Guardar en la base de datos
         await admin.save();
 
+        // TODO: Generar el token - le damos el ID
+        const token = await generarJWT(admin.id);
+
         response.json({
             ok: true,
-            admin
+            admin,
+            token
         })
     } catch (error) {
         console.log(error);
