@@ -9,10 +9,11 @@ const { check } = require('express-validator');
 
 // Middlewares
 const { validarCampos } = require('../middlewares/validar-campos');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 // Controlador
 const { 
-    getAdmin, 
+    getAllAdmin, 
     crearAdmin, 
     actualizarAdmin, 
     eliminarAdmin
@@ -22,21 +23,22 @@ const router = Router();
 
 // TODO: Rutas
 // Obtener admin
-router.get('/', getAdmin);
+router.get('/', validarJWT, getAllAdmin);
 
 // Crear admin
 router.post('/', [
     check('email', 'El correo electrónico es obligatorio').isEmail(),
     check('password', 'La contraseña es obligatoria').not().isEmpty(),
     validarCampos
-], crearAdmin)
+], crearAdmin);
 
 // Actualizar admin
 router.put('/:id', [
+    validarJWT,
     check('email', 'El correo electrónico es obligatorio').isEmail()
 ], actualizarAdmin);
 
 // Eliminar admin
-router.delete('/:id', eliminarAdmin)
+router.delete('/:id', validarJWT, eliminarAdmin)
 
 module.exports = router;

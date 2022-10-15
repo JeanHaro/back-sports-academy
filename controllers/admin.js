@@ -8,13 +8,14 @@ const { generarJWT } = require('../helpers/jwt');
 const Admin = require('../models/admin');
 
 // Obtener administradores
-const getAdmin = async (request, response) => {
+const getAllAdmin = async (request, response) => {
     // TODO: Encontrar administradores
     const admin = await Admin.find();
 
     response.json({
         ok: true,
-        admin
+        admin,
+        uid: request.uid
     })
 }
 
@@ -153,7 +154,7 @@ const eliminarAdmin = async (request, response) => {
 }
 
 module.exports = {
-    getAdmin,
+    getAllAdmin,
     crearAdmin,
     actualizarAdmin,
     eliminarAdmin
