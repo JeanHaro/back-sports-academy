@@ -27,6 +27,8 @@ dbConnection();
 app.use('/api/admin', require('./routes/admin'));
 // --> Horario
 app.use('/api/horario', require('./routes/horario'));
+// --> Matricula
+app.use('/api/matricula', require('./routes/matricula'));
 // --> Auth
 app.use('/api/auth', require('./routes/auth'));
 
