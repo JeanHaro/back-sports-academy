@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const MatriculaSchema = Schema({
+const RegistroSchema = Schema({
     nombre: {
         type: String,
         require: true
@@ -25,6 +25,22 @@ const MatriculaSchema = Schema({
         type: Boolean,
         require: true
     },
+    pago1: {
+        type: Boolean,
+        require: true
+    },
+    pago2: {
+        type: Boolean,
+        require: true
+    },
+    pago3: {
+        type: Boolean,
+        require: true
+    },
+    pago4: {
+        type: Boolean,
+        require: true
+    },
     horario: {
         type: Schema.Types.ObjectId,
         ref: 'Horario'
@@ -38,4 +54,4 @@ HorarioSchema.method('toJSON', function() {
     return object;
 });
 
-module.exports = model('Matricula', MatriculaSchema);
+module.exports = model('Registro', RegistroSchema);

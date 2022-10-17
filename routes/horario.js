@@ -9,7 +9,6 @@ const { check } = require('express-validator');
 
 // Middlewares
 const { validarCampos } = require('../middlewares/validar-campos');
-const { validarJWT } = require('../middlewares/validar-jwt');
 
 // Controllers
 const { 

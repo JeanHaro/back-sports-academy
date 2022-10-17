@@ -29,6 +29,8 @@ app.use('/api/admin', require('./routes/admin'));
 app.use('/api/horario', require('./routes/horario'));
 // --> Matricula
 app.use('/api/matricula', require('./routes/matricula'));
+// --> Registro
+app.use('/api/registro', require('./routes/registro'));
 // --> Auth
 app.use('/api/auth', require('./routes/auth'));
 

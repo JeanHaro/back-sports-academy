@@ -7,6 +7,9 @@ const { Router } = require('express');
 // Validación de campos
 const { check } = require('express-validator');
 
+// Middlewares
+const { validarCampos } = require('../middlewares/validar-campos');
+
 // Controllers
 const { 
     getAllMatriculas,
@@ -14,10 +17,6 @@ const {
     actualizarMatricula,
     eliminarMatricula 
 } = require('../controllers/matricula');
-
-// Middlewares
-const { validarCampos } = require('../middlewares/validar-campos');
-const { validarJWT } = require('../middlewares/validar-jwt');
 
 const router = Router();
 
