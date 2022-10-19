@@ -1,3 +1,7 @@
+// Modelo
+const Horario = require('../models/horario');
+
+// Obtener horarios
 const getAllHorarios = (request, response) => {
     response.json({
         ok: true,
@@ -5,11 +9,30 @@ const getAllHorarios = (request, response) => {
     })
 };
 
-const crearHorario = (request, response) => {
-    response.json({
-        ok: true,
-        msg: 'Crear Horario'
-    })
+const crearHorario = async (request, response) => {
+    const uid = request.uid;
+    const horario = new Horario({
+        registro: uid,
+        ...request.body
+    });
+
+    try {
+        const horarioDB = await horario.save();
+
+        response.json({
+            ok: true,
+            horario: horarioDB
+        })
+    } catch (error) {
+        console.log(error);
+
+        response.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        })
+    }
+
+    
 };
 
 const actualizarHorario = (request, response) => {
