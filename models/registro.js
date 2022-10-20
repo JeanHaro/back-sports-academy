@@ -21,6 +21,10 @@ const RegistroSchema = Schema({
         type: Number,
         require: true
     },
+    codigo: {
+        type: String,
+        require: true
+    },
     matricula: {
         type: Boolean,
         require: true,
