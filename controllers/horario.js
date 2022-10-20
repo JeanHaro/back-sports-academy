@@ -9,6 +9,7 @@ const getAllHorarios = (request, response) => {
     })
 };
 
+// Crear horario
 const crearHorario = async (request, response) => {
     const uid = request.uid;
     const horario = new Horario({
@@ -31,10 +32,9 @@ const crearHorario = async (request, response) => {
             msg: 'Hable con el administrador'
         })
     }
-
-    
 };
 
+// Actualizar Horario
 const actualizarHorario = (request, response) => {
     response.json({
         ok: true,
@@ -42,6 +42,7 @@ const actualizarHorario = (request, response) => {
     })
 };
 
+// Eliminar Horario
 const eliminarHorario = (request, response) => {
     response.json({
         ok: true,
