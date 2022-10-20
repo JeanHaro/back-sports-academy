@@ -35,7 +35,7 @@ router.post('/', [
     check('rango_hora', 'El rango de hora es obligatorio').not().isEmpty(),
     check('fecha_inicial', 'La fecha inicial es obligatorio').isDate(),
     check('fecha_final', 'La fecha final es obligatorio').isDate(),
-    check('registros', 'El id del registro es obligatorio').not().isEmpty(),
+    check('registros', 'El id del registro es obligatorio').isMongoId(),
     validarCampos
 ], crearHorario);
 

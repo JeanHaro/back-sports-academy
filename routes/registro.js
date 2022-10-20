@@ -34,7 +34,7 @@ router.post('/', [
     check('email', 'El email es obligatorio').isEmail(),
     check('celular', 'El celular es obligatorio').not().isEmpty(),
     check('dni', 'El número del DNI es obligatorio').not().isEmpty(),
-    check('horario', 'El id del horario es obligatorio').not().isEmpty(),
+    check('horario', 'El id del horario es obligatorio').isMongoId(),
     validarCampos
 ], crearRegistro);
 
