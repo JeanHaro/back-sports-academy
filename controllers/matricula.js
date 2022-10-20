@@ -2,10 +2,12 @@
 const Matricula = require('../models/matricula');
 
 // Obtener Matriculas
-const getAllMatriculas = (request, response) => {
+const getAllMatriculas = async (request, response) => {
+    const matriculas = await Matricula.find().populate('admin', 'email').populate('horario');
+    
     response.json({
         ok: true,
-        msg: 'Obtener Matriculas'
+        matriculas
     });
 }
 

@@ -2,10 +2,12 @@
 const Horario = require('../models/horario');
 
 // Obtener horarios
-const getAllHorarios = (request, response) => {
+const getAllHorarios = async (request, response) => {
+    const horario = await Horario.find();
+
     response.json({
         ok: true,
-        msg: 'Obtener Horarios'
+        horario
     })
 };
 
