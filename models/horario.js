@@ -37,7 +37,7 @@ const HorarioSchema = Schema({
         ref: 'Admin'
     },
     registros: { 
-        // required: true,
+        required: true,
         type: Schema.Types.ObjectId,
         ref: 'Registro'
     }
