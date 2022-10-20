@@ -23,16 +23,23 @@ const MatriculaSchema = Schema({
     },
     matricula: {
         type: Boolean,
-        require: true
+        require: true,
+        default: false
+    },
+    admin: {
+        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Admin'
     },
     horario: {
+        required: true,
         type: Schema.Types.ObjectId,
         ref: 'Horario'
     }
 });
 
 // Sobrescribir el método
-HorarioSchema.method('toJSON', function() {
+MatriculaSchema.method('toJSON', function() {
     const { __v, ...object } = this.toObject();
 
     return object;

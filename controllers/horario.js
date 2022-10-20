@@ -12,7 +12,7 @@ const getAllHorarios = (request, response) => {
 const crearHorario = async (request, response) => {
     const uid = request.uid;
     const horario = new Horario({
-        registro: uid,
+        admin: uid,
         ...request.body
     });
 

@@ -9,6 +9,7 @@ const { check } = require('express-validator');
 
 // Middlewares
 const { validarCampos } = require('../middlewares/validar-campos');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 // Controllers
 const { 
@@ -25,7 +26,16 @@ const router = Router();
 router.get('/', getAllMatriculas);
 
 // Crear matricula
-router.post('/', [], crearMatricula);
+router.post('/', [
+    validarJWT,
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('apellido', 'El apellido es obligatorio').not().isEmpty(),
+    check('email', 'El email es obligatorio').isEmail(),
+    check('celular', 'El celular es obligatorio').not().isEmpty(),
+    check('dni', 'El número del DNI es obligatorio').not().isEmpty(),
+    check('horario', 'El id del horario es obligatorio').not().isEmpty(),
+    validarCampos
+], crearMatricula);
 
 // Actualizar matricula
 router.put('/:id', [], actualizarMatricula);

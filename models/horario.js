@@ -31,6 +31,11 @@ const HorarioSchema = Schema({
         type: Date,
         require: true
     },
+    admin: {
+        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Admin'
+    },
     registros: { 
         // required: true,
         type: Schema.Types.ObjectId,
