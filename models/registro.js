@@ -23,32 +23,43 @@ const RegistroSchema = Schema({
     },
     matricula: {
         type: Boolean,
-        require: true
+        require: true,
+        default: true
     },
     pago1: {
         type: Boolean,
-        require: true
+        require: true,
+        default: false
     },
     pago2: {
         type: Boolean,
-        require: true
+        require: true,
+        default: false
     },
     pago3: {
         type: Boolean,
-        require: true
+        require: true,
+        default: false
     },
     pago4: {
         type: Boolean,
-        require: true
+        require: true,
+        default: false
+    },
+    admin: {
+        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Admin'
     },
     horario: {
+        required: true,
         type: Schema.Types.ObjectId,
         ref: 'Horario'
     }
 });
 
 // Sobrescribir el método
-HorarioSchema.method('toJSON', function() {
+RegistroSchema.method('toJSON', function() {
     const { __v, ...object } = this.toObject();
 
     return object;
