@@ -19,7 +19,18 @@ const crearRegistro = async (request, response) => {
         ...request.body
     })
 
+    const { email } = response.status;
+
     try {
+        const existeEmail = await Registro.findOne({ email });
+
+        if (existeEmail) {
+            return response.status(400).json({
+                ok: false,
+                msg: 'Hay un usuario registrado con ese email'
+            })
+        }
+
         const registroDB = await registro.save();
 
         response.json({

@@ -19,7 +19,18 @@ const crearHorario = async (request, response) => {
         ...request.body
     });
 
+    const { nombre } = request.body;
+
     try {
+        const existeHorario = await Horario.findOne({ nombre });
+
+        if (existeHorario) {
+            return response.status(400).json({
+                ok: false,
+                msg: 'Ya existe un horario con ese nombre'
+            })
+        }
+
         const horarioDB = await horario.save();
 
         response.json({

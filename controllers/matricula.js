@@ -19,7 +19,18 @@ const crearMatricula = async (request, response) => {
         ...request.body
     })
 
+    const { email } = request.body;
+
     try {
+        const existeEmail = await Matricula.findOne({ email });
+
+        if (existeEmail) {
+            return response.status(400).json({
+                ok: false,
+                msg: 'Hay un usuario registrado con ese email'
+            })
+        }
+
         const matriculaDB = await matricula.save();
 
         response.json({

@@ -11,7 +11,8 @@ const RegistroSchema = Schema({
     },
     email: {
         type: String,
-        require: true
+        require: true,
+        unique: true
     },
     celular: {
         type: Number,
