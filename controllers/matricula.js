@@ -11,6 +11,18 @@ const getAllMatriculas = async (request, response) => {
     });
 }
 
+// Obtener Matricula
+const getMatricula = async (request, response) => {
+    const uid = request.params.id;
+
+    const matricula = await Matricula.findById(uid).populate('admin', 'email').populate('horario');
+
+    response.json({
+        ok: true,
+        matricula
+    })
+}
+
 // Crear Matriculas
 const crearMatricula = async (request, response) => {
     const uid = request.uid;
@@ -65,6 +77,7 @@ const eliminarMatricula = (request, response) => {
 
 module.exports = {
     getAllMatriculas,
+    getMatricula,
     crearMatricula,
     actualizarMatricula,
     eliminarMatricula

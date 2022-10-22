@@ -11,6 +11,18 @@ const getAllHorarios = async (request, response) => {
     })
 };
 
+// Obtener horario
+const getHorario = async (request, response) => {
+    const uid = request.params.id;
+
+    const horario = await Horario.findById(uid);
+
+    response.json({
+        ok: true,
+        horario
+    })
+}
+
 // Crear horario
 const crearHorario = async (request, response) => {
     const uid = request.uid;
@@ -65,6 +77,7 @@ const eliminarHorario = (request, response) => {
 
 module.exports = {
     getAllHorarios,
+    getHorario,
     crearHorario,
     actualizarHorario,
     eliminarHorario

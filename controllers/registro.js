@@ -11,6 +11,18 @@ const getAllRegistros = async (request, response) => {
     });
 }
 
+// Obtener Registro
+const getRegistro = async (request, response) => {
+    const uid = request.params.id;
+
+    const registro = await Registro.findById(uid).populate('admin', 'email').populate('horario'); 
+
+    response.json({
+        ok: true,
+        registro
+    })
+}
+
 // Crear Registro
 const crearRegistro = async (request, response) => {
     const uid = request.uid;
@@ -65,6 +77,7 @@ const eliminarRegistro = (request, response) => {
 
 module.exports = {
     getAllRegistros,
+    getRegistro,
     crearRegistro,
     actualizarRegistro,
     eliminarRegistro

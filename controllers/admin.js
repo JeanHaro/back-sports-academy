@@ -19,6 +19,19 @@ const getAllAdmin = async (request, response) => {
     })
 }
 
+// Obtener administrador
+const getAdmin = async (request, response) => {
+    const uid = request.params.id;
+
+    const admin = await Admin.findById(uid);
+
+    response.json({
+        ok: true,
+        admin,
+        uid: request.uid
+    })
+}
+
 // Crear administradores
 const crearAdmin = async (request, response) => {
     // Valores del body
@@ -155,6 +168,7 @@ const eliminarAdmin = async (request, response) => {
 
 module.exports = {
     getAllAdmin,
+    getAdmin,
     crearAdmin,
     actualizarAdmin,
     eliminarAdmin

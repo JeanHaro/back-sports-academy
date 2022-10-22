@@ -14,6 +14,7 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 // Controllers
 const { 
     getAllHorarios,
+    getHorario,
     crearHorario,
     actualizarHorario,
     eliminarHorario
@@ -23,7 +24,10 @@ const router = Router();
 
 // TODO: Rutas
 // Obtener horarios
-router.get('/', validarJWT,getAllHorarios);
+router.get('/', validarJWT, getAllHorarios);
+
+// Obtener horario
+router.get('/:id', validarJWT, getHorario);
 
 // Crear horario
 router.post('/', [

@@ -14,16 +14,20 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 // Controllers
 const { 
     getAllMatriculas,
+    getMatricula,
     crearMatricula,
     actualizarMatricula,
-    eliminarMatricula 
+    eliminarMatricula
 } = require('../controllers/matricula');
 
 const router = Router();
 
 // TODO: Rutas
 // Obtener matriculas
-router.get('/', getAllMatriculas);
+router.get('/', validarJWT, getAllMatriculas);
+
+// Obtener matricula
+router.get('/:id', validarJWT, getMatricula)
 
 // Crear matricula
 router.post('/', [

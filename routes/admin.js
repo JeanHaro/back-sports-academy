@@ -13,7 +13,8 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 
 // Controlador
 const { 
-    getAllAdmin, 
+    getAllAdmin,
+    getAdmin,
     crearAdmin, 
     actualizarAdmin, 
     eliminarAdmin
@@ -22,8 +23,11 @@ const {
 const router = Router();
 
 // TODO: Rutas
-// Obtener admin
+// Obtener admins
 router.get('/', validarJWT, getAllAdmin);
+
+// Obtener admin
+router.get('/:id', validarJWT, getAdmin)
 
 // Crear admin
 router.post('/', [

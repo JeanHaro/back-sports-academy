@@ -14,9 +14,10 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 // Controllers
 const { 
     getAllRegistros,
+    getRegistro,
     crearRegistro,
     actualizarRegistro,
-    eliminarRegistro 
+    eliminarRegistro
 } = require('../controllers/registro');
 
 
@@ -24,7 +25,10 @@ const router = Router();
 
 // TODO: Rutas
 // Obtener registros
-router.get('/', getAllRegistros);
+router.get('/', validarJWT, getAllRegistros);
+
+// Obtener registro
+router.get('/:id', validarJWT, getRegistro);
 
 // Crear registro
 router.post('/', [
