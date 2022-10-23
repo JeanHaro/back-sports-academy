@@ -112,11 +112,37 @@ const actualizarRegistro = async (request, response) => {
 }
 
 // Eliminar Registro
-const eliminarRegistro = (request, response) => {
-    response.json({
-        ok: true,
-        msg: 'Eliminar Registro'
-    });
+const eliminarRegistro = async (request, response) => {
+    // Obtenemos el id del enlace
+    const uid = request.params.id;
+
+    try {
+        // TODO: Buscamos admin por ID
+        const registroID = await Registro.findById(uid);
+
+        // Si no se encuentra el id
+        if (!registroID) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'No existe un registro por ese id'
+            })
+        }
+
+        // TODO: Eliminación
+        await Registro.findByIdAndDelete(uid);
+
+        response.json({
+            ok: true,
+            msg: 'Registro eliminado'
+        })
+    } catch (error) {
+        console.log(error);
+        
+        response.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        })
+    }
 }
 
 module.exports = {

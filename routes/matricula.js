@@ -42,6 +42,6 @@ router.post('/', [
 ], crearMatricula);
 
 // Eliminar matricula
-router.delete('/:id', eliminarMatricula);
+router.delete('/:id', validarJWT, eliminarMatricula);
 
 module.exports = router;

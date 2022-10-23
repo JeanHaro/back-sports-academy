@@ -154,7 +154,7 @@ const eliminarAdmin = async (request, response) => {
 
         response.json({
             ok: true,
-            msg: 'Usuario eliminado'
+            msg: 'Admin eliminado'
         })
     } catch (error) {
         console.log(error);

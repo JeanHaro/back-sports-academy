@@ -60,11 +60,37 @@ const crearMatricula = async (request, response) => {
 }
 
 // Eliminar Matricula
-const eliminarMatricula = (request, response) => {
-    response.json({
-        ok: true,
-        msg: 'Eliminar Matricula'
-    });
+const eliminarMatricula = async (request, response) => {
+    // Obtenemos el id del enlace
+    const uid = request.params.id;
+
+    try {
+        // TODO: Buscamos admin por ID
+        const matriculaID = await Matricula.findById(uid);
+
+        // Si no se encuentra el id
+        if (!matriculaID) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'No existe una matrícula por ese id'
+            })
+        }
+
+        // TODO: Eliminación
+        await Matricula.findByIdAndDelete(uid);
+
+        response.json({
+            ok: true,
+            msg: 'Matrícula eliminada'
+        })
+    } catch (error) {
+        console.log(error);
+        
+        response.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        })
+    }
 }
 
 module.exports = {

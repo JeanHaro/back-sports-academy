@@ -57,7 +57,7 @@ router.put('/:id', [
 ], actualizarRegistro);
 
 // Eliminar registro
-router.delete('/:id', eliminarRegistro);
+router.delete('/:id', validarJWT, eliminarRegistro);
 
 module.exports = router;
 

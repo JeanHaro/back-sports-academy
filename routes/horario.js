@@ -56,6 +56,6 @@ router.put('/:id', [
 ], actualizarHorario);
 
 // Eliminar horario
-router.delete('/:id', eliminarHorario);
+router.delete('/:id', validarJWT, eliminarHorario);
 
 module.exports = router;

@@ -111,11 +111,37 @@ const actualizarHorario = async (request, response) => {
 };
 
 // Eliminar Horario
-const eliminarHorario = (request, response) => {
-    response.json({
-        ok: true,
-        msg: 'Borrar Horario'
-    })
+const eliminarHorario = async (request, response) => {
+    // Obtenemos el id del enlace
+    const uid = request.params.id;
+
+    try {
+        // TODO: Buscamos admin por ID
+        const horarioID = await Horario.findById(uid);
+
+        // Si no se encuentra el id
+        if (!horarioID) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'No existe un horario por ese id'
+            })
+        }
+
+        // TODO: Eliminación
+        await Horario.findByIdAndDelete(uid);
+
+        response.json({
+            ok: true,
+            msg: 'Horario eliminado'
+        })
+    } catch (error) {
+        console.log(error);
+        
+        response.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        })
+    }
 };
 
 module.exports = {
