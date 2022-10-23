@@ -59,14 +59,6 @@ const crearMatricula = async (request, response) => {
     }
 }
 
-// Actualizar Matricula
-const actualizarMatricula = (request, response) => {
-    response.json({
-        ok: true,
-        msg: 'Actualizar Matricula'
-    });
-}
-
 // Eliminar Matricula
 const eliminarMatricula = (request, response) => {
     response.json({
@@ -79,6 +71,5 @@ module.exports = {
     getAllMatriculas,
     getMatricula,
     crearMatricula,
-    actualizarMatricula,
     eliminarMatricula
 }

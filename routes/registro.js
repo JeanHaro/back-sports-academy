@@ -44,7 +44,17 @@ router.post('/', [
 ], crearRegistro);
 
 // Actualizar registro
-router.put('/:id', [], actualizarRegistro);
+router.put('/:id', [
+    validarJWT,
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('apellido', 'El apellido es obligatorio').not().isEmpty(),
+    check('email', 'El email es obligatorio').isEmail(),
+    check('celular', 'El celular es obligatorio').not().isEmpty(),
+    check('dni', 'El número del DNI es obligatorio').not().isEmpty(),
+    check('codigo', 'El código es obligatorio').not().isEmpty(),
+    check('horario', 'El id del horario es obligatorio').isMongoId(),
+    validarCampos
+], actualizarRegistro);
 
 // Eliminar registro
 router.delete('/:id', eliminarRegistro);

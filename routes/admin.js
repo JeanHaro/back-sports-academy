@@ -39,7 +39,8 @@ router.post('/', [
 // Actualizar admin
 router.put('/:id', [
     validarJWT,
-    check('email', 'El correo electrónico es obligatorio').isEmail()
+    check('email', 'El correo electrónico es obligatorio').isEmail(),
+    validarCampos
 ], actualizarAdmin);
 
 // Eliminar admin

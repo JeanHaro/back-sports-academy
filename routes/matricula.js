@@ -16,7 +16,6 @@ const {
     getAllMatriculas,
     getMatricula,
     crearMatricula,
-    actualizarMatricula,
     eliminarMatricula
 } = require('../controllers/matricula');
 
@@ -41,9 +40,6 @@ router.post('/', [
     check('horario', 'El id del horario es obligatorio').isMongoId(),
     validarCampos
 ], crearMatricula);
-
-// Actualizar matricula
-router.put('/:id', [], actualizarMatricula);
 
 // Eliminar matricula
 router.delete('/:id', eliminarMatricula);

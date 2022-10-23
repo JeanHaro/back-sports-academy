@@ -60,11 +60,55 @@ const crearRegistro = async (request, response) => {
 }
 
 // Actualizar Registro
-const actualizarRegistro = (request, response) => {
-    response.json({
-        ok: true,
-        msg: 'Actualizar Registro'
-    });
+const actualizarRegistro = async (request, response) => {
+    const uid = request.params.id;
+
+    try {
+        // TODO: Buscar registro por el ID 
+        const registroID = await Registro.findById(uid);
+
+        // Si no se encuentra el id
+        if (!registroID) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'No existe un registro por ese id'
+            })
+        }
+
+        // TODO: Campos recibidos
+        const { email, ...campos } = request.body;
+
+        // TODO: Si el email del id no es igual al email recibida
+        if (registroID.email !== email) {
+            const existeEmail = await Registro.findOne({ email: request.body.email })
+
+            // Si el email ya existe
+            if (existeEmail) {
+                return response.status(400).json({
+                    ok: false,
+                    msg: "Ya existe un registro con ese email"
+                })
+            }
+        }
+
+        // TODO: Guardamos el email
+        campos.email = email;
+
+        // TODO: Actualización
+        const registroActualizado = await Registro.findByIdAndUpdate(uid, campos, { new: true });
+
+        response.json({
+            ok: true,
+            admin: registroActualizado
+        })
+    } catch (error) {
+        console.log(error);
+        
+        response.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        })
+    }
 }
 
 // Eliminar Registro

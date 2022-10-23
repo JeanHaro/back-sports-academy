@@ -43,7 +43,17 @@ router.post('/', [
 ], crearHorario);
 
 // Actualizar horario
-router.put('/:id', [], actualizarHorario);
+router.put('/:id', [
+    validarJWT,
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('cant_matriculas', 'La cantidad de matriculas es obligatoria').not().isEmpty(),
+    check('turno', 'El turno es obligatorio').not().isEmpty(),
+    check('rango_edad', 'El rango de edad es obligatorio').not().isEmpty(),
+    check('rango_hora', 'El rango de hora es obligatorio').not().isEmpty(),
+    check('fecha_inicial', 'La fecha inicial es obligatorio').isDate(),
+    check('fecha_final', 'La fecha final es obligatorio').isDate(),
+    validarCampos
+], actualizarHorario);
 
 // Eliminar horario
 router.delete('/:id', eliminarHorario);
