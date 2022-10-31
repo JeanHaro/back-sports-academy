@@ -15,11 +15,19 @@ const HorarioSchema = Schema({
         type: String,
         require: true
     },
-    rango_edad: {
+    edad_min: {
+        type: Number,
+        require: true
+    },
+    edad_max: {
+        type:Number,
+        require: true
+    },
+    hora_inicial: {
         type: String,
         require: true
     },
-    rango_hora: {
+    hora_final: {
         type: String,
         require: true
     },
