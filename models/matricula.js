@@ -45,7 +45,9 @@ const MatriculaSchema = Schema({
 
 // Sobrescribir el método
 MatriculaSchema.method('toJSON', function() {
-    const { __v, ...object } = this.toObject();
+    const { _id, __v, ...object } = this.toObject();
+
+    object.uid = _id;
 
     return object;
 });
