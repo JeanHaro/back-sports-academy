@@ -3,7 +3,7 @@ const Matricula = require('../models/matricula');
 
 // Obtener Matriculas
 const getAllMatriculas = async (request, response) => {
-    const matriculas = await Matricula.find().populate('admin', 'email').populate('horario');
+    const matriculas = await Matricula.find();
     
     response.json({
         ok: true,
@@ -15,7 +15,7 @@ const getAllMatriculas = async (request, response) => {
 const getMatricula = async (request, response) => {
     const uid = request.params.id;
 
-    const matricula = await Matricula.findById(uid).populate('admin', 'email').populate('horario');
+    const matricula = await Matricula.findById(uid).populate('horario');
 
     response.json({
         ok: true,
@@ -25,13 +25,11 @@ const getMatricula = async (request, response) => {
 
 // Crear Matriculas
 const crearMatricula = async (request, response) => {
-    const uid = request.uid;
     const matricula = new Matricula({
-        admin: uid,
         ...request.body
     })
 
-    const { email } = request.body;
+    const { email, dni } = request.body;
 
     try {
         const existeEmail = await Matricula.findOne({ email });
@@ -40,6 +38,15 @@ const crearMatricula = async (request, response) => {
             return response.status(400).json({
                 ok: false,
                 msg: 'Hay un usuario registrado con ese email'
+            })
+        }
+
+        const existeDNI = await Matricula.findOne({ dni });
+
+        if (existeDNI) {
+            return response.status(400).json({
+                ok: false,
+                msg: 'Hay un usuario registrado con ese dni'
             })
         }
 

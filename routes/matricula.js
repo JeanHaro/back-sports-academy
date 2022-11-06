@@ -30,7 +30,6 @@ router.get('/:id', validarJWT, getMatricula)
 
 // Crear matricula
 router.post('/', [
-    validarJWT,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('apellido', 'El apellido es obligatorio').not().isEmpty(),
     check('email', 'El email es obligatorio').isEmail(),

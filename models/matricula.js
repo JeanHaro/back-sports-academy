@@ -31,11 +31,6 @@ const MatriculaSchema = Schema({
         require: true,
         default: false
     },
-    admin: {
-        required: true,
-        type: Schema.Types.ObjectId,
-        ref: 'Admin'
-    },
     horario: {
         required: true,
         type: Schema.Types.ObjectId,

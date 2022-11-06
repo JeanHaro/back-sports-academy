@@ -24,7 +24,7 @@ const router = Router();
 
 // TODO: Rutas
 // Obtener horarios
-router.get('/', validarJWT, getAllHorarios);
+router.get('/', getAllHorarios);
 
 // Obtener horario
 router.get('/:id', validarJWT, getHorario);
