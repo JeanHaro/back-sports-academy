@@ -26,14 +26,18 @@ const getRegistro = async (request, response) => {
 // Crear Registro
 const crearRegistro = async (request, response) => {
     const uid = request.uid;
+
+    // Instanciamos la estructura del Admin
     const registro = new Registro({
         admin: uid,
         ...request.body
     })
 
+    // Valores del body
     const { email } = response.status;
 
     try {
+        // TODO: Encontrar el email en los registros creados
         const existeEmail = await Registro.findOne({ email });
 
         if (existeEmail) {
@@ -43,6 +47,7 @@ const crearRegistro = async (request, response) => {
             })
         }
 
+        // TODO: Guardar en la base de datos
         const registroDB = await registro.save();
 
         response.json({
@@ -61,6 +66,7 @@ const crearRegistro = async (request, response) => {
 
 // Actualizar Registro
 const actualizarRegistro = async (request, response) => {
+    // Obtenemos el id del enlace
     const uid = request.params.id;
 
     try {
@@ -117,7 +123,7 @@ const eliminarRegistro = async (request, response) => {
     const uid = request.params.id;
 
     try {
-        // TODO: Buscamos admin por ID
+        // TODO: Buscamos registro por ID
         const registroID = await Registro.findById(uid);
 
         // Si no se encuentra el id

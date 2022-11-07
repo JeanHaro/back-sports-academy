@@ -9,7 +9,6 @@ const Admin = require('../models/admin');
 
 // Obtener administradores
 const getAllAdmin = async (request, response) => {
-    // TODO: Encontrar administradores
     const admin = await Admin.find();
 
     response.json({
@@ -39,7 +38,7 @@ const crearAdmin = async (request, response) => {
 
     // Verificar si el admin ya existe
     try {
-        // TODO: Encontrar los email de los admin
+        // TODO: Encontrar el email en los admin creados
         const existeEmail = await Admin.findOne({ email });
 
         // Si el email ya existe
@@ -88,7 +87,6 @@ const actualizarAdmin = async (request, response) => {
         // TODO: Buscar admin por el ID 
         const adminID = await Admin.findById(uid);
 
-        // Si no se encuentra el id
         if (!adminID) {
             return response.status(404).json({
                 ok: false,
@@ -141,7 +139,6 @@ const eliminarAdmin = async (request, response) => {
         // TODO: Buscamos admin por ID
         const adminID = await Admin.findById(uid);
 
-        // Si no se encuentra el id
         if (!adminID) {
             return response.status(404).json({
                 ok: false,

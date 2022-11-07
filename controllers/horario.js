@@ -26,14 +26,18 @@ const getHorario = async (request, response) => {
 // Crear horario
 const crearHorario = async (request, response) => {
     const uid = request.uid;
+
+    // Instanciamos la estructura del Admin
     const horario = new Horario({
         admin: uid,
         ...request.body
     });
 
+    // Valores del body
     const { nombre } = request.body;
 
     try {
+        // TODO: Encontrar el nombre en los horarios creados
         const existeHorario = await Horario.findOne({ nombre });
 
         if (existeHorario) {
@@ -43,6 +47,7 @@ const crearHorario = async (request, response) => {
             })
         }
 
+        // TODO: Guardar en la base de datos
         const horarioDB = await horario.save();
 
         response.json({
@@ -61,6 +66,7 @@ const crearHorario = async (request, response) => {
 
 // Actualizar Horario
 const actualizarHorario = async (request, response) => {
+    // Obtenemos el id del enlace
     const uid = request.params.id;
 
     try {
@@ -116,7 +122,7 @@ const eliminarHorario = async (request, response) => {
     const uid = request.params.id;
 
     try {
-        // TODO: Buscamos admin por ID
+        // TODO: Buscamos horario por ID
         const horarioID = await Horario.findById(uid);
 
         // Si no se encuentra el id
