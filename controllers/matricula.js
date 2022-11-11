@@ -1,6 +1,7 @@
 // Models
 const Matricula = require('../models/matricula');
 const Horario = require('../models/horario');
+const Registro = require('../models/registro');
 
 // Obtener Matriculas
 const getAllMatriculas = async (request, response) => {
@@ -38,7 +39,11 @@ const crearMatricula = async (request, response) => {
         // TODO: Encontrar el email en las matriculas creadas
         const existeEmail = await Matricula.findOne({ email });
 
-        if (existeEmail) {
+        // TODO: Encontrar el email en los registros creados
+        const emailRegistro = await Registro.findOne({ email });
+
+        // Existe email
+        if (existeEmail || emailRegistro) {
             return response.status(400).json({
                 ok: false,
                 msg: 'Hay un usuario registrado con ese email'
@@ -48,7 +53,10 @@ const crearMatricula = async (request, response) => {
         // TODO: Encontrar el dni en las matriculas creadas
         const existeDNI = await Matricula.findOne({ dni });
 
-        if (existeDNI) {
+        const dniRegistro = await Registro.findOne({ dni });
+
+        // Existe dni
+        if (existeDNI || dniRegistro) {
             return response.status(400).json({
                 ok: false,
                 msg: 'Hay un usuario registrado con ese dni'
