@@ -1,3 +1,6 @@
+// Date-fns
+const { format } = require('date-fns');
+
 // Models
 const Matricula = require('../models/matricula');
 const Horario = require('../models/horario');
@@ -82,11 +85,26 @@ const crearMatricula = async (request, response) => {
             })
         }
 
+        // TODO: Fechas horario
+        // Fecha inicio
+        let yearS = new Date(horarioID.fecha_inicial).getUTCFullYear();
+        let monthS = new Date(horarioID.fecha_inicial).getUTCMonth();
+        let dayS = new Date(horarioID.fecha_inicial).getUTCDate();
+        // date-fns
+        let fecha_inicio = format(new Date(yearS, monthS, dayS), 'yyyy-MM-dd');
+
+         // Fecha hoy
+        let year = new Date().getFullYear();
+        let month = new Date().getMonth();
+        let day = new Date().getDate();
+        // date-fns
+        let today = format(new Date(year, month, day), 'yyyy-MM-dd');
+
         // Si la fecha inicial del horario ya pasó
-        if (horarioID.fecha_inicial <= new Date()) {
+        if (fecha_inicio < today) {
             return response.status(404).json({
                 ok: false,
-                msg: 'El horario ya ha comenzado'
+                msg: 'El horario ya ha comenzado',
             })
         }
 
@@ -131,9 +149,6 @@ const eliminarMatricula = async (request, response) => {
             })
         }
 
-        // TODO: Eliminación
-        await Matricula.findByIdAndDelete(uid);
-
         // TODO: Buscar horario por el ID 
         const horarioID = await Horario.findById(matriculaID.horario); 
 
@@ -152,6 +167,9 @@ const eliminarMatricula = async (request, response) => {
 
         // TODO: Actualización del horario
         await Horario.findByIdAndUpdate(matriculaID.horario, campo, { new: true });
+
+        // TODO: Eliminación
+        await Matricula.findByIdAndDelete(uid);
 
         response.json({
             ok: true,
