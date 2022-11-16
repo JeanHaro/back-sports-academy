@@ -22,6 +22,10 @@ const RegistroSchema = Schema({
         type: Number,
         require: true
     },
+    edad: {
+        type: Number,
+        require:true
+    },
     codigo: {
         type: String,
         require: true

@@ -7,7 +7,7 @@ const Registro = require('../models/registro');
 
 // Obtener Registros
 const getAllRegistros = async (request, response) => {
-    const registros = await Registro.find().populate('admin', 'email').populate('horario');
+    const registros = await Registro.find().populate('admin', 'email');
 
     response.json({
         ok: true,
