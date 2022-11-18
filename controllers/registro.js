@@ -146,7 +146,7 @@ const actualizarRegistro = async (request, response) => {
         }
 
         // TODO: Campos recibidos
-        const { email, ...campos } = request.body;
+        const { email, dni, horario, ...campos } = request.body;
 
         // TODO: Si el email del id no es igual al email recibida
         if (registroID.email !== email) {
@@ -161,11 +161,97 @@ const actualizarRegistro = async (request, response) => {
             }
         }
 
+        // TODO: Si el DNI del id no es igual al dni recibida
+        if (registroID.dni !== dni) {
+            const existeDNI = await Registro.findOne({ dni: request.body.dni })
+
+            // Si el email ya existe
+            if (existeDNI) {
+                return response.status(400).json({
+                    ok: false,
+                    msg: 'Hay un usuario registrado con ese dni'
+                })
+            }
+        }
+
+        // TODO: Buscar horario nuevo por el ID 
+        const horario_nuevoID = await Horario.findById(horario); 
+
+        // Si no se encuentra el id
+        if (!horario_nuevoID) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'No existe el horario nuevo por ese id'
+            })
+        }
+
+        // Si no hay vacantes en el nuevo horario
+        if (horario_nuevoID.cant_matriculas <= 0) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'No hay vacantes para este horario'
+            })
+        }
+
+        // TODO: Fechas horario
+        // Fecha inicio
+        let yearS = new Date(horario_nuevoID.fecha_inicial).getUTCFullYear();
+        let monthS = new Date(horario_nuevoID.fecha_inicial).getUTCMonth();
+        let dayS = new Date(horario_nuevoID.fecha_inicial).getUTCDate();
+        // date-fns
+        let fecha_inicio = format(new Date(yearS, monthS, dayS), 'yyyy-MM-dd');
+
+         // Fecha hoy
+        let year = new Date().getFullYear();
+        let month = new Date().getMonth();
+        let day = new Date().getDate();
+        // date-fns
+        let today = format(new Date(year, month, day), 'yyyy-MM-dd');
+
+        // Si la fecha inicial del horario ya pasó
+        if (fecha_inicio < today) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'El horario ya ha comenzado',
+            })
+        }
+
+        // TODO: Reducir una matrícula al horario nuevo
+        campo_despues = {
+            cant_matriculas: horario_nuevoID.cant_matriculas - 1
+        }
+
+        // TODO: Actualización del horario nuevo
+        await Horario.findByIdAndUpdate(horario, campo_despues, { new: true });
+
+        // TODO: Obtener el ID del horario anterior
+        const horario_anterior = registroID.horario;
+
+        // TODO: Buscar horario anteropr por el ID 
+        const horario_anteriorID = await Horario.findById(horario_anterior); 
+
+        // Si no se encuentra el id
+        if (!horario_anteriorID) {
+            return response.status(404).json({
+                ok: false,
+                msg: 'No existe el horario anterior por ese id'
+            })
+        }
+
+        // TODO: Aumentarle la matricula al horario anterior
+        campo_anterior = {
+            cant_matriculas: horario_anteriorID.cant_matriculas + 1
+        }
+
+        // TODO: Actualización del horario anterior
+        await Horario.findByIdAndUpdate(horario_anterior, campo_anterior, { new: true });
+
         // TODO: Guardamos el email
         campos.email = email;
 
         // TODO: Actualización
         const registroActualizado = await Registro.findByIdAndUpdate(uid, campos, { new: true });
+
 
         response.json({
             ok: true,
