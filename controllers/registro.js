@@ -193,29 +193,6 @@ const actualizarRegistro = async (request, response) => {
             })
         }
 
-        // TODO: Fechas horario
-        // Fecha inicio
-        let yearS = new Date(horario_nuevoID.fecha_inicial).getUTCFullYear();
-        let monthS = new Date(horario_nuevoID.fecha_inicial).getUTCMonth();
-        let dayS = new Date(horario_nuevoID.fecha_inicial).getUTCDate();
-        // date-fns
-        let fecha_inicio = format(new Date(yearS, monthS, dayS), 'yyyy-MM-dd');
-
-         // Fecha hoy
-        let year = new Date().getFullYear();
-        let month = new Date().getMonth();
-        let day = new Date().getDate();
-        // date-fns
-        let today = format(new Date(year, month, day), 'yyyy-MM-dd');
-
-        // Si la fecha inicial del horario ya pasó
-        if (fecha_inicio < today) {
-            return response.status(404).json({
-                ok: false,
-                msg: 'El horario ya ha comenzado',
-            })
-        }
-
         // TODO: Reducir una matrícula al horario nuevo
         campo_despues = {
             cant_matriculas: horario_nuevoID.cant_matriculas - 1
