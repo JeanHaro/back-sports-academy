@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 // Controlador
-const { envioContactanos } = require('../controllers/email');
+const { envioContactanos } = require('../controllers/contactanos');
 
 const router = Router();
 
