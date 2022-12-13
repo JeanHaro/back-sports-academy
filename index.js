@@ -33,6 +33,8 @@ app.use('/api/matricula', require('./routes/matricula'));
 app.use('/api/registro', require('./routes/registro'));
 // --> Auth
 app.use('/api/auth', require('./routes/auth'));
+// --> Enviar Correo
+app.use('/api/contacto', require('./routes/email'));
 
 // Levantamos el servidor
 app.listen(process.env.PORT, () => {
