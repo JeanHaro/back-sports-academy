@@ -6,6 +6,12 @@ const Matricula = require('../models/matricula');
 const Horario = require('../models/horario');
 const Registro = require('../models/registro');
 
+// Variables de entorno
+require('dotenv').config();
+
+// Servicios
+const { enviarMail } = require('../services/email');
+
 // Obtener Matriculas
 const getAllMatriculas = async (request, response) => {
     const matriculas = await Matricula.find();
@@ -36,7 +42,7 @@ const crearMatricula = async (request, response) => {
     })
 
     // Valores del body
-    const { email, dni, horario } = request.body;
+    const { nombre, apellido, codigo, celular, edad, email, dni, horario } = request.body;
 
     try {
         // TODO: Encontrar el email en las matriculas creadas
@@ -93,6 +99,13 @@ const crearMatricula = async (request, response) => {
         // date-fns
         let fecha_inicio = format(new Date(yearS, monthS, dayS), 'yyyy-MM-dd');
 
+        // Fecha final
+        let yearE = new Date(horarioID.fecha_final).getUTCFullYear();
+        let monthE = new Date(horarioID.fecha_final).getUTCMonth();
+        let dayE = new Date(horarioID.fecha_final).getUTCDate();
+        // date-fns
+        let fecha_final = format(new Date(yearE, monthE, dayE), 'yyyy-MM-dd');
+
          // Fecha hoy
         let year = new Date().getFullYear();
         let month = new Date().getMonth();
@@ -112,6 +125,53 @@ const crearMatricula = async (request, response) => {
         campo = {
             cant_matriculas: horarioID.cant_matriculas - 1
         }
+
+        // TODO: Enviar al correo
+        let contentHtml = `
+            <h1>Forcrack Matricula</h1>
+
+            <p>El costo de la matrícula es: S/ 80</p>
+            <p>El costo de los pagos mensuales es de: S/ 450</p>
+            <p>Tu código para el pago es: ${codigo}</p>
+
+            <h2>Depositar a esta cuenta:</h2>
+
+            <ul>
+                <li>Nombre: Forcrack</li>
+                <li>N° de cuenta: 205-16486468-1-25</li>
+                <li>CCI: 056454684646665</li>
+            </ul>
+
+            <h2>Información personal</h2>
+            <ul>
+                <li>Nombres: ${nombre}</li>
+                <li>Apellidos: ${apellido}</li>
+                <li>Email: ${email}</li>
+                <li>Edad: ${edad}</li>
+                <li>Celular: ${celular}</li>
+                <li>DNI: ${dni}</li>
+            </ul>
+
+            <h2>Horario matriculado</h2>
+            <ul>
+                <li>Nombre: ${horarioID.nombre}</li>
+                <li>Turno: ${horarioID.turno}</li>
+                <li>Edad mínima: ${horarioID.edad_min}</li>
+                <li>Edad máxima: ${horarioID.edad_max}</li>
+                <li>Hora: ${horarioID.hora_inicial} - ${horarioID.hora_final}</li>
+                <li>Fecha de inicio: ${fecha_inicio}</li>
+                <li>Fecha final: ${fecha_final}</li>
+            </ul>
+        `;
+
+        const datos = {
+            from: process.env.CORREO,
+            to: email,
+            subject: 'Matricula',
+            html: contentHtml
+        }
+
+        enviarMail(response, datos);
 
         // TODO: Actualización del horario
         await Horario.findByIdAndUpdate(horario, campo, { new: true });

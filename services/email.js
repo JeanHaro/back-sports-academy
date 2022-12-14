@@ -1,3 +1,4 @@
+// Nodemailer
 const nodeMailer = require('nodemailer');
 
 // Variables de entorno

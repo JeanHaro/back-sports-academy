@@ -1,6 +1,9 @@
 // Servicios
 const { enviarMail } = require('../services/email');
 
+// Variables de entorno
+require('dotenv').config();
+
 // TODO: Enviar correo mediante contáctanos
 const envioContactanos = (request, response) => {
     let { nombre, email, celular, asunto, mensaje } = request.body;
@@ -20,7 +23,7 @@ const envioContactanos = (request, response) => {
 
     const datos = {
         from: email,
-        to: 'jeanch447@gmail.com',
+        to: process.env.CORREO,
         subject: asunto,
         html: contentHtml
     }
