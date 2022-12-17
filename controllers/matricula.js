@@ -126,6 +126,12 @@ const crearMatricula = async (request, response) => {
             cant_matriculas: horarioID.cant_matriculas - 1
         }
 
+        // TODO: Actualización del horario
+        await Horario.findByIdAndUpdate(horario, campo, { new: true });
+
+        // TODO: Guardar en la base de datos la matricula
+        const matriculaDB = await matricula.save();
+
         // TODO: Enviar al correo
         let contentHtml = `
             <h1>Forcrack Matricula</h1>
@@ -172,12 +178,6 @@ const crearMatricula = async (request, response) => {
         }
 
         enviarMail(response, datos);
-
-        // TODO: Actualización del horario
-        await Horario.findByIdAndUpdate(horario, campo, { new: true });
-
-        // TODO: Guardar en la base de datos la matricula
-        const matriculaDB = await matricula.save();
 
         response.json({
             ok: true,

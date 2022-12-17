@@ -5,6 +5,12 @@ const { format } = require('date-fns');
 const Horario = require('../models/horario');
 const Registro = require('../models/registro');
 
+// Variables de entorno
+require('dotenv').config();
+
+// Servicios
+const { enviarMail } = require('../services/email');
+
 // Obtener Registros
 const getAllRegistros = async (request, response) => {
     const registros = await Registro.find().populate('admin', 'email');
@@ -38,7 +44,7 @@ const crearRegistro = async (request, response) => {
     })
 
     // Valores del body
-    const { email, dni, horario } = request.body;
+    const { nombre, apellido, codigo, celular, edad, email, dni, horario } = request.body;
 
     try {
         // TODO: Encontrar el email en los registros creados
@@ -88,6 +94,13 @@ const crearRegistro = async (request, response) => {
         // date-fns
         let fecha_inicio = format(new Date(yearS, monthS, dayS), 'yyyy-MM-dd');
 
+        // Fecha final
+        let yearE = new Date(horarioID.fecha_final).getUTCFullYear();
+        let monthE = new Date(horarioID.fecha_final).getUTCMonth();
+        let dayE = new Date(horarioID.fecha_final).getUTCDate();
+        // date-fns
+        let fecha_final = format(new Date(yearE, monthE, dayE), 'yyyy-MM-dd');
+
          // Fecha hoy
         let year = new Date().getFullYear();
         let month = new Date().getMonth();
@@ -113,6 +126,55 @@ const crearRegistro = async (request, response) => {
 
         // TODO: Actualización del horario
         await Horario.findByIdAndUpdate(horario, campo, { new: true });
+
+        // TODO: Enviar al correo
+        let contentHtml = `
+            <h1>Forcrack Registro</h1>
+
+            <p>¡Felicidades! Ya estás registrad@ como alumno de nuestra institución deportiva</p>
+            <br>
+            <p>El costo de la matrícula es: S/ 80</p>
+            <p>El costo de los pagos mensuales es de: S/ 450</p>
+            <p>Tu código para el pago es: ${codigo}</p>
+
+            <h2>Depositar a esta cuenta:</h2>
+
+            <ul>
+                <li>Nombre: Forcrack</li>
+                <li>N° de cuenta: 205-16486468-1-25</li>
+                <li>CCI: 056454684646665</li>
+            </ul>
+
+            <h2>Información personal</h2>
+            <ul>
+                <li>Nombres: ${nombre}</li>
+                <li>Apellidos: ${apellido}</li>
+                <li>Email: ${email}</li>
+                <li>Edad: ${edad}</li>
+                <li>Celular: ${celular}</li>
+                <li>DNI: ${dni}</li>
+            </ul>
+
+            <h2>Horario matriculado</h2>
+            <ul>
+                <li>Nombre: ${horarioID.nombre}</li>
+                <li>Turno: ${horarioID.turno}</li>
+                <li>Edad mínima: ${horarioID.edad_min}</li>
+                <li>Edad máxima: ${horarioID.edad_max}</li>
+                <li>Hora: ${horarioID.hora_inicial} - ${horarioID.hora_final}</li>
+                <li>Fecha de inicio: ${fecha_inicio}</li>
+                <li>Fecha final: ${fecha_final}</li>
+            </ul>
+        `;
+
+        const datos = {
+            from: process.env.CORREO,
+            to: email,
+            subject: 'Registro',
+            html: contentHtml
+        }
+
+        enviarMail(response, datos);
 
         response.json({
             ok: true,
@@ -228,8 +290,7 @@ const actualizarRegistro = async (request, response) => {
 
         // TODO: Actualización
         const registroActualizado = await Registro.findByIdAndUpdate(uid, campos, { new: true });
-
-
+        
         response.json({
             ok: true,
             admin: registroActualizado
