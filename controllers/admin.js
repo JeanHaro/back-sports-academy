@@ -95,7 +95,7 @@ const actualizarAdmin = async (request, response) => {
         }
 
         // TODO: Campos recibidos
-        const { password, email, ...campos } = request.body;
+        const { email, password, password_nueva, ...campos } = request.body;
 
         // TODO: Si el email del id no es igual al email recibida
         if (adminID.email !== email) {
@@ -110,7 +110,27 @@ const actualizarAdmin = async (request, response) => {
             }
         }
 
-        // TODO: Guardamos el email
+        // TODO: Verificar contraseña
+        const validPassword = bcrypt.compareSync(password, adminID.password);
+
+        // Si no es la contraseña
+        if (!validPassword) {
+            return response.status(400).json({
+                ok: false,
+                msg: 'Contraseña no valida'
+            })
+        }
+
+        if (password_nueva !== '') {
+            // TODO: Encriptar contraseña
+            // Genera un número o data de manera aleatoria
+            const salt = bcrypt.genSaltSync();
+            adminID.password = bcrypt.hashSync(password_nueva, salt); // Hashea el password
+
+            // TODO: Guardamos el email
+            campos.password = adminID.password;
+        }
+
         campos.email = email;
 
         // TODO: Actualización
