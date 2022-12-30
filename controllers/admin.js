@@ -13,8 +13,7 @@ const getAllAdmin = async (request, response) => {
 
     response.json({
         ok: true,
-        admin,
-        uid: request.uid
+        admin
     })
 }
 
@@ -26,8 +25,7 @@ const getAdmin = async (request, response) => {
 
     response.json({
         ok: true,
-        admin,
-        uid: request.uid
+        admin
     })
 }
 

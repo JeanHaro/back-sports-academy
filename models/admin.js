@@ -10,6 +10,11 @@ const AdminSchema = Schema({
     password: {
         type: String,
         require: true
+    },
+    code: {
+        type: Boolean,
+        default: false,
+        require: true,
     }
 })
 
