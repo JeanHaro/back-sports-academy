@@ -24,7 +24,7 @@ const router = Router();
 
 // TODO: Rutas
 // Obtener admins
-router.get('/', validarJWT, getAllAdmin);
+router.get('/', getAllAdmin);
 
 // Obtener admin
 router.get('/:id', validarJWT, getAdmin)
