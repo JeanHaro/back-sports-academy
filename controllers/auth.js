@@ -114,6 +114,12 @@ const sendCode = async (request, response) => {
             enviarMail(response, datos);
         }
 
+        setTimeout(() => {
+            cod = process.env.CODE_SEND;
+        }, 60000);
+
+        // clearTimeout(tiempo);
+
         response.json({
             ok: true,
             msg: 'Codigo enviado'
